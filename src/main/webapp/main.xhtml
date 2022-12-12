@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/templates/templLayout.xhtml">
+   <ui:define name="content">
+      <table id="main-table">
+         <tr>
+            <th class="title-plate">Визуализация</th>
+            <th class="title-plate">Ввод данных</th>
+         </tr>
+         <tr>
+            <td class="image-container">
+               <canvas id="plot" width="320" height="320">Интерактивная область графика</canvas>
+            </td>
+            <td class="content-plate">
+               <h:form id="former">
+                  <table id="input-grid">
+                     <tr>
+                        <td>
+                           <label>Выберите X:</label>
+                        </td>
+                        <td>
+                           <h:selectOneRadio id="x" styleClass="list-x" value="#{pointBean.result.xValue}" required="true">
+                              <f:selectItem itemValue = "-4" itemLabel = "-4"/>
+                              <f:selectItem itemValue = "-3" itemLabel = "-3"/>
+                              <f:selectItem itemValue = "-2" itemLabel = "-2"/>
+                              <f:selectItem itemValue = "-1" itemLabel = "-1"/>
+                              <f:selectItem itemValue = "0" itemLabel = "0"/>
+                              <f:selectItem itemValue = "1" itemLabel = "1"/>
+                              <f:selectItem itemValue = "2" itemLabel = "2"/>
+                              <f:selectItem itemValue = "3" itemLabel = "3"/>
+                              <f:selectItem itemValue = "4" itemLabel = "4"/>
+                           </h:selectOneRadio>
+                        </td>
+                     </tr>
+
+                     <tr>
+                        <td>
+                           Введите Y:
+                        </td>
+                        <td>
+                           <h:inputText styleClass="y-textinput"
+                                        maxlength="5" autocomplete="off" a:placeholder="Число от -5 до 3..."
+                                        value="#{pointBean.result.yValue}" required="true">
+                              <f:validateRequired/>
+                              <f:validateDoubleRange minimum="-5" maximum="3"/>
+                           </h:inputText>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           Выберите R:
+                        </td>
+
+                        <td>
+                           <ul class="list-r">
+                              <h:inputHidden styleClass="r-hide" id="r-hide" value="#{pointBean.result.rValue}">
+                              </h:inputHidden>
+
+                              <li class="r-item">
+                                 <h:commandButton styleClass="r-button" id="r-button1" type="button" value="1.0"/>
+                              </li>
+                              <li class="r-item">
+                                 <h:commandButton styleClass="r-button" id="r-button2" type="button" value="1.5"/>
+                              </li>
+                              <li class="r-item">
+                                 <h:commandButton styleClass="r-button" id="r-button3" type="button" value="2.0"/>
+                              </li>
+                              <li class="r-item">
+                                 <h:commandButton styleClass="r-button" id="r-button4" type="button" value="2.5"/>
+                              </li>
+                              <li class="r-item">
+                                 <h:commandButton styleClass="r-button" id="r-button5" type="button" value="3.0"/>
+                              </li>
+                           </ul>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <h:commandButton id="send" styleClass="button sender" value="submit" action="#{pointBean.addPoint}" />
+                        </td>
+                        <td>
+                           <h:commandButton id="clear" styleClass="button" value="clear" action="#{pointBean.clearPoints()}" immediate="true"/>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td colspan="2">
+                           <span class="text-error invisible" id="error"/>
+                        </td>
+                     </tr>
+                  </table>
+               </h:form>
+            </td>
+         </tr>
+         <tr>
+            <th class="title-plate" colspan="2">Результат</th>
+         </tr>
+         <tr>
+            <td colspan="2">
+               <h:dataTable styleClass="result-table" value="#{pointBean.results}" var="point">
+                  <h:column headerClass="coords-col">
+                     <f:facet name="header">X</f:facet>
+                     <h:outputText value="#{point.xValue}"/>
+                  </h:column>
+                  <h:column headerClass="coords-col">
+                     <f:facet name="header">Y</f:facet>
+                     <h:outputText value="#{point.yValue}"/>
+                  </h:column>
+                  <h:column headerClass="coords-col">
+                     <f:facet name="header">R</f:facet>
+                     <h:outputText value="#{point.rValue}"/>
+                  </h:column>
+                  <h:column headerClass="hit-col">
+                     <f:facet name="header">Результат</f:facet>
+                     <h:outputText value="#{point.hitTranscription}"/>
+                  </h:column>
+               </h:dataTable>
+            </td>
+         </tr>
+      </table>
+
+      <h:outputScript library="js" name="script.js"/>
+   </ui:define>
+   <ui:define name="footer">
+      <h:link outcome="index">
+         На стартовую страницу
+      </h:link>
+   </ui:define>
+</ui:composition>
+</html>

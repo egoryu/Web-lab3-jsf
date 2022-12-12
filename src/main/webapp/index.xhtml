@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/templates/templLayout.xhtml">
+    <ui:define name="content">
+        <div>
+            <span class="date-container"> lkek </span>
+            <br/>
+            <span class="time-container"> иул </span>
+        </div>
+        <h:outputScript library="js" name="index.js" />
+    </ui:define>
+
+    <ui:define name="footer">
+        <h:link outcome="main">
+            На основную страницу
+        </h:link>
+    </ui:define>
+</ui:composition>
+</html>
